@@ -1,0 +1,69 @@
+import java.util.*;
+import java.io.*;
+class Solution{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        for(int z=1;z<=t;z++){
+            //main code starts
+            int n=sc.nextInt();
+            int [][] arr=new int[n][2];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<2;j++){
+                    arr[i][j]=sc.nextInt();
+                }
+            }//input taken
+
+            //impossible condition
+            int flag=0;
+            for(int i=0;i<n;i++){
+                for(int k=i;k<n;k++){
+                    if(k==i){
+                        continue;
+                    }
+                    if((arr[k][0]<arr[i][1] && arr[k][0]>arr[i][0]) || (arr[k][1]<arr[i][1] && arr[k][1]>arr[i][0])){
+                        for(int l=0;l<n;l++){
+                            if(l==k || l==i){
+                                continue;
+                            }
+                            if((arr[l][0]>arr[k][0] && arr[l][0]<arr[k][1] && arr[l][0]>arr[i][0] && arr[l][0]<arr[i][1]) || (arr[l][1]>arr[k][0] && arr[l][1]<arr[k][1] && arr[l][1]<arr[i][1] && arr[l][1]>arr[i][0])){
+                                flag=1;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+            if(flag==1){
+                System.out.println("Case #"+z+": IMPOSSIBLE");
+                continue;
+            }
+
+            int[] sol=new int[n];
+            flag=1;
+            sol[0]=1;
+            for(int i=1;i<n;i++){
+                for(int k=i-1;k<i;k++){
+                    if(arr[i][0]<arr[k][1]){
+                        if(flag==1){
+                            flag=2;}
+                        else{
+                            flag=1;}
+                    }
+                }
+                sol[i]=flag;
+            }
+            System.out.print("Case #"+z+": ");
+            for(int i=0;i<n;i++){
+                if(sol[i]==1){
+                    System.out.print("C");
+                }
+                else{
+                    System.out.print("J");
+                }
+            }
+            System.out.print("\n");
+        }
+    }
+}

@@ -1,0 +1,49 @@
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int testCaseCount = scanner.nextInt();
+
+        for (int i = 0; i < testCaseCount; i++) {
+            int matrixSize = scanner.nextInt();
+            int[][] matrix = new int[matrixSize][matrixSize];
+            int diagonalSum = 0;
+
+            for (int row = 0; row < matrixSize; row++) {
+                for (int col = 0; col < matrixSize; col++) {
+                    matrix[row][col] = scanner.nextInt();
+                    if (row == col) {
+                        diagonalSum += matrix[row][col];
+                    }
+                }
+            }
+
+            int duplicateRows = 0;
+            int duplicateCols = 0;
+
+            for (int row = 0; row < matrixSize; row++) {
+                HashSet<Integer> rowSet = new HashSet<>();
+                for (int col = 0; col < matrixSize; col++) {
+                    rowSet.add(matrix[row][col]);
+                }
+                if (rowSet.size() != matrixSize) {
+                    duplicateRows++;
+                }
+            }
+
+            for (int col = 0; col < matrixSize; col++) {
+                HashSet<Integer> colSet = new HashSet<>();
+                for (int row = 0; row < matrixSize; row++) {
+                    colSet.add(matrix[row][col]);
+                }
+                if (colSet.size() != matrixSize) {
+                    duplicateCols++;
+                }
+            }
+
+            System.out.println("Case #" + (i + 1) + ": " + diagonalSum + " " + duplicateRows + " " + duplicateCols);
+        }
+    }
+}

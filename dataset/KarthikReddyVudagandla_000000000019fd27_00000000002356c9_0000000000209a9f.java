@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+public class Solution{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        int t =scan.nextInt();
+        scan.nextLine();
+        for(int f=1;f<=t;f++){
+            Stack<String> stack = new Stack<String>();
+            StringBuilder sb= new StringBuilder();
+            String s = scan.nextLine();
+            String[] s1=s.split("");
+            //System.out.println(s1.length);
+            for(int k=0;k<s1.length;k++){
+                int a=Integer.parseInt(s1[k]);
+                int count=Math.abs(a-stack.size());
+                if(a>=stack.size()){
+                    
+                    for(int i=0;i<count;i++){
+                        //System.out.println("pushed (");
+                        stack.push("(");
+                        sb.append("(");
+                    }
+                    //sb.append(a);
+                }else{
+                    for(int i=0;i<count;i++){
+                       // System.out.println("popped )");
+                        stack.pop();
+                        sb.append(")");
+                    }
+                    //sb.append(a);
+                }
+                sb.append(a);
+                
+            
+            }
+            while(stack.size()>0){stack.pop();sb.append(")");}
+            
+            System.out.println("Case #"+f+": "+sb.toString());
+        }
+    }
+}

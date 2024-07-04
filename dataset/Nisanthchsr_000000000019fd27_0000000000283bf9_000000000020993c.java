@@ -1,0 +1,41 @@
+import java.util.*;
+class Solution
+{
+    public static void main(String args[])
+    {
+        Scanner scan =new Scanner(System.in);
+        int t=scan.nextInt();
+         HashSet<Integer> h;
+        for(int i=1;i<=t;i++)
+        {
+            int l=0,r=0,c=0;
+            int n =scan.nextInt();
+            int a[][] =new int[n][n];
+            for(int j=0;j<n;j++)
+            for(int k=0;k<n;k++)
+            a[j][k]=scan.nextInt();
+            for(int j=0;j<n;j++)
+            l+=a[j][j];
+            for(int j=0;j<n;j++)
+            {
+                h=new HashSet<Integer>();
+                for(int k=0;k<n;k++)
+                h.add(a[j][k]);
+                if(h.size()<n)
+                r++;
+                
+            }
+            for(int j=0;j<n;j++)
+            {
+                h=new HashSet<Integer>();
+                for(int k=0;k<n;k++)
+                h.add(a[k][j]);
+                if(h.size()<n)
+                c++;
+                
+            }
+            
+         System.out.println("Case #"+i+":"+" "+l+" "+r+" "+c);   
+        }
+    }
+}

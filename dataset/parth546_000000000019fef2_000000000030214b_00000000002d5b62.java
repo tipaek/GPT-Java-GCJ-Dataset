@@ -1,0 +1,72 @@
+import java.util.*;
+
+public class Solution {
+    static Scanner sc=new Scanner(System.in);
+    public static void main(String args[])
+    {
+        int t=sc.nextInt();
+        for(int i=1;i<=t;i++)
+            eachCase(i);
+    }
+    static void eachCase(int testCase)
+    {
+        long x=sc.nextLong();
+        long y=sc.nextLong();
+        System.out.print("Case #"+testCase+": ");
+        if((x+y)%2!=0)
+            bfs(x,y);
+        else
+            System.out.println("IMPOSSIBLE");
+    }
+    static void bfs(long x,long y)
+    {
+        Set<String> visited=new HashSet<>();
+        LinkedList<CustomClass> frontier= new LinkedList<>();
+        frontier.addLast(new CustomClass(0,0,"",0));
+        while(!frontier.isEmpty()) {
+            CustomClass state = frontier.removeFirst();
+            visited.add(state.x+","+state.y);
+            if(state.depth>20){
+                System.out.println("IMPOSSIBLE");
+                break;
+            }
+            if (state.x == x && state.y == y) {
+                print(state);
+                break;
+            }
+            CustomClass[] children = state.getChildren();
+            for (int i = 0; i < 4; i++) {
+                if(!visited.contains(children[i].x+","+children[i].y)){
+                frontier.addLast(children[i]);
+                visited.add(children[i].x+","+children[i].y);
+                }
+            }
+            //System.out.println(""+state.depth+" "+state.x+","+state.y);
+
+        }
+    }
+    static void print(CustomClass obj)
+    {
+        System.out.println(obj.moves);
+    }
+}
+class CustomClass{
+    public long x,y;
+    String moves;
+    long depth;
+    CustomClass(long x,long y, String moves, long depth){
+        this.x=x;
+        this.y=y;
+        this.moves=moves;
+        this.depth=depth;
+    }
+    CustomClass[] getChildren(){
+        CustomClass[] ans= new CustomClass[4];
+        ans[0]= new CustomClass(this.x+(int)Math.pow(2,this.depth),this.y,this.moves+"E",this.depth+1);
+        ans[1]= new CustomClass(this.x-(int)Math.pow(2,this.depth),this.y,this.moves+"W",this.depth+1);
+        ans[2]= new CustomClass(this.x,this.y+(int)Math.pow(2,this.depth),this.moves+"N",this.depth+1);
+        ans[3]= new CustomClass(this.x,this.y-(int)Math.pow(2,this.depth),this.moves+"S",this.depth+1);
+        //ans=[new CustomClass(this.x+(int)Math.pow(2,depth),this.y,this.moves+"W",this.depth+1),new CustomClass(this.x,this.y,this.moves,this.depth),new CustomClass(this.x,this.y,this.moves,this.depth),new CustomClass(this.x,this.y,this.moves,this.depth)];
+        return ans;
+    }
+}

@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int p = in.nextInt();
+
+        for (int t = 1; t <= p; t++) {
+            int n = in.nextInt();
+            int[][] matrix = new int[n][n];
+            int diagonalSum = 0;
+
+            // Reading the matrix and calculating the diagonal sum
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = in.nextInt();
+                    if (i == j) {
+                        diagonalSum += matrix[i][j];
+                    }
+                }
+            }
+
+            int rowMax = 0, colMax = 0;
+
+            // Checking for duplicate elements in columns
+            for (int c = 0; c < n; c++) {
+                Set<Integer> colSet = new HashSet<>();
+                for (int r = 0; r < n; r++) {
+                    if (!colSet.add(matrix[r][c])) {
+                        colMax++;
+                        break;
+                    }
+                }
+            }
+
+            // Checking for duplicate elements in rows
+            for (int r = 0; r < n; r++) {
+                Set<Integer> rowSet = new HashSet<>();
+                for (int c = 0; c < n; c++) {
+                    if (!rowSet.add(matrix[r][c])) {
+                        rowMax++;
+                        break;
+                    }
+                }
+            }
+
+            System.out.println("Case #" + t + ": " + diagonalSum + " " + rowMax + " " + colMax);
+        }
+
+        in.close();
+    }
+}

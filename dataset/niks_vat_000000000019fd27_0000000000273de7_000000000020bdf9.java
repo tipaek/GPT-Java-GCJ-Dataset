@@ -1,0 +1,92 @@
+import java.util.*;
+
+class Solution{
+
+    static class Ranges implements Comparable<Ranges>{
+        int index;
+        int start;
+        int end;
+        public Ranges(int index, int s, int e){
+            this.index = index;
+            this.start=s;
+            this.end=e;
+        }
+
+        public int compareTo(Ranges o){
+            return this.start-o.start;
+        }
+
+        public String toString(){
+            return String.valueOf(start)+"-"+String.valueOf(end);
+        }
+
+
+    }
+    
+    
+    public static void main(String... args){
+        
+        
+        Scanner in = new Scanner(System.in);
+        int T = in.nextInt();
+        for(int t=1;t<=T;t++){
+            
+            HashMap<Integer, Character> hm = new HashMap<>();
+            //ArrayList<String> org = new ArrayList<>();
+
+            int n = in.nextInt();
+            ArrayList<Ranges> al = new ArrayList<Ranges>();
+            for(int i=0;i<n;i++){
+                int start = in.nextInt();
+                int end = in.nextInt();
+                al.add(new Ranges(i,start, end));
+                //org.add(String.valueOf(start)+"|"+String.valueOf(end));
+            }
+
+            Collections.sort(al);
+            //System.out.println(al);
+            String ans = "";
+            int c = al.get(0).end;
+            int j = 0;
+            hm.put(al.get(0).index, 'C');
+
+            boolean impos = false;
+            for(int i=1;i<n;i++){
+                Ranges curr = al.get(i);
+                if(curr.start<c){
+                    if(curr.start<j){
+                        impos=true;
+                        break;
+                    }else{
+                        //ans+="J";
+                        hm.put(curr.index, 'J');
+                        j = Math.max(j, curr.end);
+                    }
+                }else{
+                    //ans+="C";
+                    hm.put(curr.index, 'C');
+                    c = Math.max(c, curr.end);
+                }
+            }
+
+            
+
+            if(impos){
+                System.out.println("Case #"+t+": IMPOSSIBLE");
+            }else{
+                for(int i=0;i<n;i++){
+                    ans += hm.get(i);
+                }
+                System.out.println("Case #"+t+": "+ans);
+            }
+
+
+
+        }
+        
+    }
+
+   
+   
+    
+}

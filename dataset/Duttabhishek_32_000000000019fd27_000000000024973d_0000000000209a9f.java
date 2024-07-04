@@ -1,0 +1,43 @@
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Solution {
+    private static Scanner sc;
+    static int tn = 1;
+    
+    public static void main (String[] args) {
+        sc = new Scanner(System.in);
+        
+        int t = sc.nextInt();
+        sc.nextLine();
+        
+        while(t-- > 0){
+            solve();
+        }
+    }
+    
+    private static void solve(){
+        String S = sc.nextLine();
+        StringBuilder sb = new StringBuilder();
+        char[] chars = S.toCharArray();
+        
+        int pairs = 0;
+        
+        int first = Character.getNumericValue(chars[0]);
+        pairs =first;
+        for (int i = 0;i < first ; i ++ ) {
+            sb.append('(');
+        }
+        sb.append(first);
+        
+        for(int i=0; i <chars.length ; i++){
+            int d = Character.getNumericValue(chars[i]);
+            
+            if(d == pairs){
+                sb.append(d);
+            }
+        }
+        System.out.println("Case #" + (tn++) + ": " + sb.toString());    
+    }
+}

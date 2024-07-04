@@ -1,0 +1,106 @@
+import java.util.Scanner;
+
+public class Solution{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        for(int x = 1; x<=T; x++){
+            int N = sc.nextInt();
+            String[] strengir = new String[N];
+            for(int i = 0; i<N;i++){
+                strengir[i] = sc.next();
+            }
+            String b = barn2(strengir[0],strengir[1]);
+            int j =2;
+            while(!b.equals("*") && j<N){
+                b = barn2(b,strengir[j]);
+                j++;
+            }
+                b = fjarlaegja(b);
+            System.out.println("Case #"+x+": "+b);
+        }
+    }
+    public static String barn2(String A, String B){
+        String S = "";
+        int ia = 0;
+        int ib =0;
+        while(A.charAt(ia) != '*') ia++;
+        while(B.charAt(ib) != '*') ib++;
+        if(ia<ib){
+            for(int i = 0; i<ia; i++){
+                if(A.charAt(i) != B.charAt(i)) return "*";
+                else S+=A.charAt(i);
+            }
+            for(int i = ia; i<ib; i++) S+= B.charAt(i);
+        }
+        else{
+            for(int i = 0; i<ib; i++){
+                if(B.charAt(i) != A.charAt(i)) return "*";
+                else S+=B.charAt(i);
+            }
+            for(int i = ib; i<ia; i++) S+= A.charAt(i);
+        }
+        S+= "*";
+        int iaendir = A.length()-1;
+        int alengd = 0;
+        int ibendir = B.length()-1;
+        int blengd = 0;
+        while(A.charAt(iaendir) != '*'){
+            alengd++;
+            iaendir--;
+        }
+        while(B.charAt(ibendir) != '*'){
+            blengd = 0;
+            ibendir--;
+        }
+        while(ia<iaendir){
+            S+=A.charAt(ia);
+            ia++;
+        }
+        S+="*";
+        while(ib<ibendir){
+            S+=B.charAt(ib);
+            ib++;
+        }
+        S+="*";
+        
+        ia++;
+        ib++;
+        int na = A.length();
+        int nb = B.length();
+        if(na-ia>nb-ib){
+            for(int i = ia; i<na-nb+ib; i++){
+                S+= A.charAt(i);
+            }
+            int j = ib;
+            for(int i = na-nb+ib; i<na; i++){
+                if(A.charAt(i) != B.charAt(j)) return "*";
+                S+=A.charAt(i);
+                j++;
+            }
+        }
+        else{
+            for(int i = ib; i<-na+nb+ia; i++){
+                S+= B.charAt(i);
+            }
+            int j = ia;
+            for(int i = nb-na+ia; i<nb; i++){
+                if(A.charAt(j) != B.charAt(i)) return "*";
+                S+=B.charAt(i);
+                j++;
+            }
+        }
+        return S;
+        
+        
+    }
+    
+    public static String fjarlaegja(String b){
+        String bn = "";
+        for(int i = 0; i<b.length();i++){
+            if(b.charAt(i) != '*') bn+=b.charAt(i);
+        }
+        if(bn.equals("")) return "*";
+        return bn;
+    }
+}

@@ -1,0 +1,143 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Solution {
+    static int[] a;
+    static int b;
+    static FastReader sc;
+    static int same = -1, diff = -1;
+
+    public static void main(String[] args) throws Exception {
+        sc = new FastReader();
+        int t = sc.nextInt();
+        b = sc.nextInt();
+        a = new int[b];
+
+        for (int tst = 1; tst <= t; tst++) {
+            int c = 0;
+
+            for (; c < 5; c++) {
+                findPair(c);
+            }
+
+            findChange();
+
+            while (c < b / 2) {
+                int i = 0;
+                for (; i < 4 && c < b / 2; i++) {
+                    c++;
+                    findPair(c);
+                }
+                if (i == 4) {
+                    findChange();
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < b; i++) {
+                sb.append(a[i]);
+            }
+            System.out.println(sb);
+            System.out.flush();
+
+            String s = sc.next();
+            if (s.equals("N")) {
+                return;
+            }
+        }
+    }
+
+    static int q(int i) {
+        System.out.println(i + 1);
+        System.out.flush();
+        return sc.nextInt();
+    }
+
+    static void findPair(int i) {
+        a[i] = q(i);
+        a[b - i - 1] = q(b - i - 1);
+
+        if (same == -1 && a[i] == a[b - i - 1]) {
+            same = i;
+        }
+        if (diff == -1 && a[i] != a[b - i - 1]) {
+            diff = i;
+        }
+    }
+
+    static void findChange() {
+        boolean comp = false;
+        if (same != -1 && a[same] != q(same)) {
+            comp = true;
+        }
+
+        boolean rev = false;
+        if (diff != -1 && a[diff] != q(diff)) {
+            if (!comp) {
+                rev = true;
+            }
+        }
+
+        if (comp) {
+            for (int i = 0; i < b / 2; i++) {
+                a[i] = a[i] == 0 ? 1 : 0;
+            }
+        }
+
+        if (rev) {
+            for (int i = 0; i < b / 2; i++) {
+                int tmp = a[i];
+                a[i] = a[b - i - 1];
+                a[b - i - 1] = tmp;
+            }
+        }
+    }
+
+    static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+
+        public FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        public void close() throws Exception {
+            br.close();
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
+}

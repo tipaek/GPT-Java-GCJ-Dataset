@@ -1,0 +1,83 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+
+		try (Scanner s = new Scanner(System.in)) {
+
+			int T = s.nextInt();
+			for (int i = 1; i <= T; i++) {
+				int N = s.nextInt();
+				List<Period> periodList = new ArrayList<Period>(N);
+				for (int j = 1; j <= N; j++) {
+					periodList.add(new Period(s.nextInt(), s.nextInt()));
+				}
+				String result = solve(periodList);
+				System.out.println("Case #" + i + ": " + result);
+			}
+		}
+	}
+
+	public static String solve(List<Period> periodList) {
+		String result = "";
+		int jUtil = 0, cUtil = 0;
+
+		ArrayList<Period> periodListSorted = new ArrayList<Solution.Period>(periodList);
+		Collections.sort(periodListSorted, new PeriodComparator());
+
+		for (Period p : periodListSorted) {
+			if (p.from >= cUtil) {
+				cUtil = p.to;
+				p.assignee = 'C';
+			} else if (p.from >= jUtil) {
+				jUtil = p.to;
+				p.assignee = 'J';
+			} else {
+				result = "IMPOSSIBLE";
+				return result;
+			}
+		}
+
+		for (Period p : periodList) {
+			result += p.assignee;
+		}
+
+		return result;
+
+	}
+
+	static class Period {
+
+		public Period(int from, int to) {
+			super();
+			this.from = from;
+			this.to = to;
+		}
+
+		int from;
+		int to;
+		char assignee;
+
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return from + " " + to;
+		}
+	}
+
+	static class PeriodComparator implements Comparator<Period> {
+
+		@Override
+		public int compare(Period o1, Period o2) {
+
+			return o1.from < o2.from ? -1 : o1.from == o2.from ? 0 : 1;
+		}
+
+	}
+
+}

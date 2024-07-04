@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        ArrayList<String> string = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            int num = sc.nextInt();
+            int act[][] = new int[num][2];
+            for(int j=0;j<num;j++){
+                act[j][0] = sc.nextInt();
+                act[j][1] = sc.nextInt();
+            }
+            string.add(new Solver1().solve(act,num));
+        }
+        int temp=0;
+        for(String s:string){
+            temp+=1;
+            System.out.println("Case #" + temp + ": " + s);
+        }
+    }
+}
+
+class Solver1 {
+    public static String solve(int arr[][], int n) {
+        String output = "" ;
+        int freeC = 0;
+        int freeJ = 0;
+        int freeC0 = 0;
+        int freeJ0 = 0;
+        ArrayList<String> assign =new ArrayList<>();
+        for(int i=0;i<n;i++){
+            int subarr[] = arr[i];
+            if(freeC <= subarr[0] || freeC0 > subarr[1]){
+                assign.add("C");
+                freeC0 = subarr[0];
+                if(freeC<subarr[1]){
+                    freeC = subarr[1];
+                }
+            }
+            else if (freeJ  <= subarr[0] || freeJ0 > subarr[1]){
+                assign.add("J");
+                freeJ0 = subarr[0];
+                if(freeJ<subarr[1]){
+                    freeJ = subarr[1];
+                }
+            }
+            else {
+                return ("IMPOSSIBLE");
+            }
+        }
+        int min = 10000;
+        int index = -1;
+        for(int i=0;i<n;i++){
+            if(arr[i][0] <= min){
+                index = i;
+                min = arr[i][0];
+            }
+        }
+        if(!assign.get(index).equals("C")){
+            for(int i=0;i<assign.size();i++){
+                if(assign.get(i).equals("J")){
+                    assign.remove(i);
+                    assign.add(i,"C");
+                }
+                else {
+                    assign.remove(i);
+                    assign.add(i,"J");
+                }
+            }
+        }
+        for(String s:assign){
+            output+=s;
+        }
+        return output;
+    }
+}

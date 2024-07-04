@@ -1,0 +1,83 @@
+import java.util.*;
+public class Solution{
+    
+    public static void sortbyColumn(int arr[][], int col) 
+    { 
+        Arrays.sort(arr, new Comparator<int[]>() { 
+          public int compare(final int[] entry1,  
+                             final int[] entry2) { 
+
+            if (entry1[col] > entry2[col]) 
+                return 1; 
+            else
+                return -1; 
+          } 
+        });
+    }
+    
+    public static void main(String args[])
+    {
+    Scanner sc = new Scanner(System.in);
+    int  t=sc.nextInt();
+    for(int  z=0;z<t;z++)
+    {
+       Integer  n=sc.nextInt(); 
+       boolean flag=true;
+       int a[][]=new int [n][3];
+       for(int  i=0,m=0;i<n;i++,m++)
+       {
+           a[i][0]=sc.nextInt();
+           a[i][1]=sc.nextInt();
+           a[i][2]=m;
+       }
+       ArrayList<Integer> je=new ArrayList<>();
+       ArrayList<Integer> ce=new ArrayList<>();
+       
+       sortbyColumn(a,0);
+       int temp;
+       
+       int y=z+1;
+       System.out.print("Case #"+y+": ");
+       char r[]=new char[n];
+       for(int  i=0;i<n;i++)
+       {
+           if(je.isEmpty()==true)
+           {
+               je.add(a[i][1]);
+               r[a[i][2]]='J';
+           }
+           else if(a[i][0]>=je.get(je.size()-1))
+           {
+               je.add(a[i][1]);
+               r[a[i][2]]='J';
+           }
+           else if(ce.isEmpty()==true)
+           {
+               ce.add(a[i][1]);
+               r[a[i][2]]='C';
+           }
+           else if(a[i][0]>=ce.get(ce.size()-1))
+           {
+               ce.add(a[i][1]);
+               r[a[i][2]]='C';
+           }
+           else
+           {
+           System.out.print("IMPOSSIBLE\n");
+           flag=false;
+           break;
+           }
+               
+       }
+       if(flag==true)
+       {
+       for(int  i=0;i<r.length;i++)
+       {
+           System.out.print(r[i]);
+       }
+       System.out.println();
+       }
+    }
+    
+    }
+}

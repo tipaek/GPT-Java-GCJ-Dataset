@@ -1,0 +1,90 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        int t = in.nextInt(); // Scanner has functions to read ints, longs, strings, chars, etc.
+        for (int index = 1; index <= t; ++index) {
+            long x = in.nextInt();
+            long y = in.nextInt();
+            String res = getRes(x, y, new StringBuilder());
+            System.out.println("Case #" + index + ": " + ("-1".equals(res) ? "IMPOSSIBLE" : res));
+            map = new HashMap<>();
+            step = 1L << 31;
+        }
+    }
+
+    static HashMap<Long, String> map = new HashMap<>();
+    static long step = 1L << 31;
+    private static String getRes(long x, long y, StringBuilder res) {
+        long key = x * 1000000001L + y;
+        if (map.get(key) != null) {
+            return map.get(key);
+        }
+        if (x == 0 && y == 0) {
+            return res.toString();
+        }
+        long absX = Math.abs(x);
+        long absY = Math.abs(y);
+        step >>= 1;
+        while (true) {
+            if (step == 0) {
+                map.put(key, "-1");
+                return "-1";
+            }
+            long and = (absX & absY) << 1;
+            if ((and & step) > 0) {
+                long tmpIndex = step;
+                String goHor = goHor(x, new StringBuilder(res), y);
+                step = tmpIndex;
+                String goVer = goVer(x, new StringBuilder(res), y);
+                if ("-1".equals(goHor) && "-1".equals(goVer)) {
+                    return "-1";
+                }
+                if ("-1".equals(goHor)){
+                    return goVer;
+                }
+                if ("-1".equals(goVer)){
+                    return goHor;
+                }
+                String rst = goVer.length() < goHor.length() ? goVer : goHor;
+                map.put(key, rst);
+                return rst;
+            } else if ((step & absX) != 0) {
+                String rst = goHor(x, res, y);
+                map.put(key ,rst);
+                return rst;
+            } else if ((step & absY) != 0) {
+                String rst = goVer(x, res, y);
+                map.put(key ,rst);
+                return rst;
+            } else {
+                step >>= 1;
+            }
+        }
+    }
+
+    private static String goHor(long x, StringBuilder res, long y) {
+        if (x > 0) {
+            x -= step;
+            res.insert(0, "E");
+        } else {
+            x += step;
+            res.insert(0, "W");
+        }
+        return getRes(x, y, res);
+    }
+
+    private static String goVer(long x, StringBuilder res, long y) {
+        if (y > 0) {
+            y -= step;
+            res.insert(0, "N");
+
+        } else {
+            res.insert(0, "S");
+            y += step;
+        }
+        return getRes(x, y, res);
+    }
+}

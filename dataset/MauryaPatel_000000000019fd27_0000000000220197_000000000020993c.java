@@ -1,0 +1,61 @@
+import java.util.*;
+class latinsquare
+{
+  public static void main(String args[])
+  {
+    Scanner in = new Scanner(System.in);
+    int n,N,M,i,m,j,k=0,r=0,c=0,flag=0;
+    n=in.nextInt();
+    M=1;
+    while(n>=M)
+    {
+      N=in.nextInt();
+      int mat[][]= new int[N][N];
+      for(i=0;i<N;i++)
+      {
+          for(j=0;j<N;j++)
+          {
+            mat[i][j]=in.nextInt();
+            if(i==j)
+              k=k+mat[i][j];
+            System.out.println("Test1");
+          }
+      }
+      for(i=0;i<N;i++)
+      {
+          for(j=0;j<N;j++)
+          {
+            for(m=j;m<N;m++)
+            {
+              if((mat[i][j]==mat[i][m])&&(flag==0)&&(j!=m))
+              {
+                r++;
+                flag=1;
+                System.out.println("Test2");
+              }
+            }
+          }
+          flag=0;
+      }
+      for(j=0;j<N;j++)
+      {
+          for(i=0;i<N;i++)
+          {
+            for(m=i;m<N;m++)
+            {
+              if((mat[i][j]==mat[m][j])&&(flag==0)&&(i!=m))
+              {
+                c++;
+                flag=1;
+                System.out.println("Test3");
+              }
+            }
+          }
+          flag=0;
+      }
+      System.out.println("Case#"+M+": "+k+" "+r+" "+c);
+      M=M+1;
+      System.out.println("Test4");
+    }
+  }
+}

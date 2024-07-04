@@ -1,0 +1,96 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
+public class Solution {
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int testCases = scanner.nextInt();
+        List<Integer[][]> results = new ArrayList<>();
+
+        for (int t = 0; t < testCases; t++) {
+            int n = scanner.nextInt();
+            int s = scanner.nextInt();
+            results.add(generateMatrix(n, s));
+        }
+
+        int caseNumber = 1;
+        for (Integer[][] result : results) {
+            if (result == null) {
+                System.out.println("Case #" + caseNumber + ": IMPOSSIBLE");
+            } else {
+                System.out.println("Case #" + caseNumber + ": POSSIBLE");
+                printMatrix(result);
+            }
+            caseNumber++;
+        }
+    }
+
+    private static void printMatrix(Integer[][] matrix) {
+        for (Integer[] row : matrix) {
+            String rowString = IntStream.range(0, row.length)
+                                        .mapToObj(i -> row[i].toString())
+                                        .reduce((a, b) -> a + " " + b)
+                                        .orElse("");
+            System.out.println(rowString);
+        }
+    }
+
+    private static Integer[][] generateMatrix(int n, int s) {
+        Integer[][] matrix = initializeMatrix(n);
+
+        for (int i = 0; i < n; i++) {
+            matrix = shiftRows(matrix);
+            for (int j = 0; j < n; j++) {
+                matrix = shiftColumns(matrix);
+                if (calculateDiagonalSum(matrix) == s) {
+                    return matrix;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static Integer[][] initializeMatrix(int n) {
+        Integer[][] matrix = new Integer[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = (i + j + 1) % n == 0 ? n : (i + j + 1) % n;
+            }
+        }
+        return matrix;
+    }
+
+    private static int calculateDiagonalSum(Integer[][] matrix) {
+        int sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            sum += matrix[i][i];
+        }
+        return sum;
+    }
+
+    private static Integer[][] shiftColumns(Integer[][] matrix) {
+        int n = matrix.length;
+        Integer[][] shiftedMatrix = new Integer[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                shiftedMatrix[i][(j + 1) % n] = matrix[i][j];
+            }
+        }
+        return shiftedMatrix;
+    }
+
+    private static Integer[][] shiftRows(Integer[][] matrix) {
+        int n = matrix.length;
+        Integer[][] shiftedMatrix = new Integer[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                shiftedMatrix[(i + 1) % n][j] = matrix[i][j];
+            }
+        }
+        return shiftedMatrix;
+    }
+}

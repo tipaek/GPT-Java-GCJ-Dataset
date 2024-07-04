@@ -1,0 +1,44 @@
+import java.util.*;
+class main{
+    public static void main(String[]args)
+    {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0)
+        {   int r=0,c=0,trace=0,not=0;
+            int n=s.nextInt();
+            int [][]a=new int[n][n];
+            ArrayList<Integer>arr=new ArrayList<>();
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    a[i][j]=s.nextInt();
+                    if(arr.contains(a[i][j])&&not==0)
+                   {            r++;
+                                not=1;
+                   }
+                }
+                arr=new ArrayList<>();
+                not=0;
+            }
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                   
+                    if(arr.contains(a[j][i])&&not==0)
+                   {            c++;
+                                not=1;
+                   }
+                       if(i==j)
+                       trace+=a[i][j];
+                }
+                arr=new ArrayList<>();
+                not=0;
+            }
+            System.out.println(trace+" "+r+" "+c);
+            
+        }
+    }
+}

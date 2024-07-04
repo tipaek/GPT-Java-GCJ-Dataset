@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+  static class ArrayComparator implements Comparator<int[]> {
+    public int compare(int[] o1, int[] o2) {
+      if (o1[0] != o2[0]) {
+        return o1[0] - o2[0];
+      }
+      return o1[1] - o2[1];
+    } 
+  }
+  public static void main(String[] args) throws IOException {
+		BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+		int t = Integer.parseInt(f.readLine());
+		for(int num = 1; num <= t; num++) {
+      int n = Integer.parseInt(f.readLine());
+      int[][] times = new int[n][3];
+      char[] assign = new char[n];
+      for(int i = 0; i < n; i++) {
+        StringTokenizer st = new StringTokenizer(f.readLine());
+        times[i][0] = 2 * Integer.parseInt(st.nextToken()) + 1;
+        times[i][1] = 2 * Integer.parseInt(st.nextToken());
+        times[i][2] = i;
+      }
+      Arrays.sort(times, new ArrayComparator());
+
+      boolean possible = true;
+      int cLatest = -1;
+      int jLatest = -1;
+      for (int i = 0; i < n; i++) {
+        if (times[i][0] > cLatest) {
+          assign[times[i][2]] = 'C';
+          cLatest = times[i][1];
+        } else if (times[i][0] > jLatest) {
+          assign[times[i][2]] = 'J';
+          jLatest = times[i][1];
+        } else {
+          possible = false;
+          break;
+        }
+      }
+
+      String output = "IMPOSSIBLE";
+      if (possible) {
+        StringBuffer out = new StringBuffer();
+        for(int i = 0; i < n; i++) {
+          out.append(assign[i]);
+        }
+        output = out.toString();
+      }
+      System.out.println("Case #" + num + ": " + output);
+		}
+		f.close();
+	}
+}

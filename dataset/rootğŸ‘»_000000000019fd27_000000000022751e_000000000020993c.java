@@ -1,0 +1,36 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        int tests = in.nextInt();
+        for (int test = 1; test <= tests; ++test) {
+            int t = in.nextInt();
+            List<Set<Integer>> verticals = new ArrayList<>(t);
+            int xRepeat = 0;
+            int yRepeat = 0;
+            int trace = 0;
+            for (int i = 0; i < t; ++i) {
+                Set<Integer> horizontal = new HashSet<>(t);
+                for (int j = 0; j < t; ++j) {
+                    int n = in.nextInt();
+                    if (i == 0) {
+                        verticals.add(new HashSet<>(t));
+                    }
+                    horizontal.add(n);
+                    verticals.get(j).add(n);
+                    if (i == t - 1 && t != verticals.get(j).size()) {
+                        ++yRepeat;
+                    }
+                    if (i == j) {
+                        trace += n;
+                    }
+                }
+                xRepeat += t != horizontal.size() ? 1 : 0;
+            }
+            System.out.printf("Case #%d: %d %d %d\n", test, trace, xRepeat, yRepeat);
+        }
+    }
+}

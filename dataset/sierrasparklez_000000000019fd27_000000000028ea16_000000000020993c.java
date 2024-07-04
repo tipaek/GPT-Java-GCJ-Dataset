@@ -1,0 +1,50 @@
+import java.util.Scanner;
+class Main{
+public static void main(String[] args){
+    int count=1;
+    int number;
+    int next_lines;
+    String row;
+    String num;
+    int r=0;
+    int c =0;
+    int k=0;
+    Scanner input = new Scanner(System.in);
+    int test_case  = input.nextInt();
+    while(count<=test_case){ 
+        k=0;
+        Scanner lines = new Scanner(System.in);
+        next_lines = input.nextInt();
+        int[][] matrix=new int[next_lines][next_lines];
+        for (int i = -1; i <=next_lines-1; i++){
+            Scanner line = new Scanner(System.in);
+            row = input.nextLine();
+            for(int j=0;row.length()>0;j++){
+                if(row.length()>1){
+                    num =row.substring(0,1);
+                    number = Integer.parseInt(num);
+                    matrix[i][j]=number;
+                    row = row.substring(row.indexOf(" ")+1);
+                }
+                else{
+                    number = Integer.parseInt(row);
+                    matrix[i][j]=number;
+                    row = "";
+                }
+            }
+        }
+        for(int l=0; l<next_lines;l++){
+            k+=matrix[l][l];
+        }
+        
+    System.out.println("Case #"+count+": "+k+ " " + r + " " + c);
+    count++; 
+    r=0;
+    c=0;
+    }
+    
+}
+
+}
+
+  

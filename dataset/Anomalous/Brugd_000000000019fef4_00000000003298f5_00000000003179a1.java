@@ -1,0 +1,60 @@
+import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        PrintWriter output = new PrintWriter(System.out);
+
+        int T = input.nextInt();
+        int sz = 10000;
+
+        int[] Q = new int[sz];
+        String[] R = new String[sz];
+
+        for (int i = 0; i < T; i++) {
+            int U = input.nextInt();
+            for (int j = 0; j < sz; j++) {
+                Q[j] = input.nextInt();
+                R[j] = input.next();
+            }
+
+            String res = solve(U, Q, R);
+            output.printf("Case #%d: %s%n", i + 1, res);
+            output.flush();
+        }
+    }
+
+    private static char getCharAtIndex(int index, int[] Q, String[] R, Set<Character> seen) {
+        char result = ' ';
+
+        for (int i = 0; i < Q.length; i++) {
+            if (R[i].isEmpty()) {
+                continue;
+            }
+
+            char currentChar = R[i].charAt(0);
+            if (Q[i] < index && !seen.contains(currentChar)) {
+                result = currentChar;
+                seen.add(result);
+            }
+        }
+        return result;
+    }
+
+    private static String solve(int U, int[] Q, String[] R) {
+        char[] resultArray = new char[10];
+        Set<Character> seenChars = new HashSet<>();
+        int i = 1;
+
+        while (i <= 10) {
+            resultArray[i - 1] = getCharAtIndex(i, Q, R, seenChars);
+            i++;
+        }
+
+        return new String(resultArray);
+    }
+}
