@@ -30,7 +30,6 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#composition">File Composition</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -66,20 +65,6 @@ Here's a breakdown of the files in this dataset:
 * 76,089 total files
 * 58,524 files of original authors from the 2020 Google Code Jam
 * 17,565 rewritten files using GPT-4o
-
-### Installation
-
-
-To download this dataset, simply clone the repository:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/tipaek/GPT-Java-GCJ-Dataset.git
-2. Navigate to the dataset folder:
-    ```bash
-    cd GPT-Java-GCJ-Dataset/dataset
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE -->
 ## Usage
