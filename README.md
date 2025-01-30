@@ -59,9 +59,8 @@ This dataset serves aims to be a resource for researchers focusing on AI-generat
 <!-- GETTING STARTED -->
 ## Getting Started
 
-### Composition
+### 📌 Dataset Structure
 
-Here's a breakdown of the files in this dataset:
 * 76,089 total files
 * 58,524 files of original authors from the 2020 Google Code Jam
 * 17,565 rewritten files using GPT-4o
@@ -76,12 +75,23 @@ Researchers can use this dataset to:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 🔗 Citation  
+If you use this dataset, please cite:  
+
+```bibtex
+@misc{P24_GCJ,
+  author = {Paek, Timothy},
+  title = {GPT Java GCJ Dataset: The Largest LLM-Generated Code Dataset from Google Code Jam},
+  year = {2024},
+  howpublished = {GitHub Repository},
+  url = {https://github.com/tipaek/GPT-Java-GCJ-Dataset}
+}
+```
+
 <!-- CONTACT -->
 ## Contact
 
 Timothy Paek - [LinkedIn](https://www.linkedin.com/in/timothy-paek/) - tipaek@syr.edu
-
-Project Link: [https://github.com/tipaek/GPT-Java-GCJ-Dataset](https://github.com/tipaek/GPT-Java-GCJ-Dataset)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
